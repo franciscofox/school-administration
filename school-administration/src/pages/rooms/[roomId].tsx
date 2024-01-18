@@ -1,5 +1,6 @@
 import React from 'react';
 import RoomDetails from '../../components/rooms/roomDetails';
+import StudentsInRoom from '@/components/students/studentsInRoom';
 
 export default function Room() {
     const containerStyle = {
@@ -15,11 +16,17 @@ export default function Room() {
     };
 
     return (
-        <div style={containerStyle}>
+        <><div style={containerStyle}>
             <div style={roomListStyle}>
                 <h2>Room Details</h2>
                 <RoomDetails />
             </div>
         </div>
+        <div style={containerStyle}>
+                <div style={roomListStyle}>
+                    <h2>Students in Room</h2>
+                    <StudentsInRoom />
+                </div>
+            </div></>
     );
 }

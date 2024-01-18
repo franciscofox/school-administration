@@ -19,6 +19,7 @@ export default function Rooms() {
             <div style={roomListStyle}>
                 <h2>Rooms</h2>
                 <RoomItems />
+                <button style={{ marginTop: '10px' }} onClick={() => console.log('Add new room')}>Add New Room</button>
             </div>
         </div>
     );

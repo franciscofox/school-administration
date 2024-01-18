@@ -1,17 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
-interface Student {
-    id: number;
-    firstName: string;
-    lastName: number;
-    age: number;
-    roomName: string;
-}
-
 
 export default function StudentDetails() {
-    const [data, setData] = useState<Student[]>();
+    const [data, setData] = useState();
     const router = useRouter();
     const { studentId } = router.query;
 

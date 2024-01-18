@@ -37,7 +37,6 @@ export default function RoomItems() {
             {data.map((item) => (
                 <div key={item.id} style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <div><Link href={`/rooms/${item.id}`}>{item.name}</Link></div>
-                    <div>{item.capacity}</div>
                 </div>
             ))}
         </div>

@@ -1,7 +1,7 @@
 import React from 'react';
-import RoomItems from '../../components/rooms/roomItems';
+import RoomDetails from '../../components/rooms/roomDetails';
 
-export default function Rooms() {
+export default function Room() {
     const containerStyle = {
         display: 'flex',
     };
@@ -17,8 +17,8 @@ export default function Rooms() {
     return (
         <div style={containerStyle}>
             <div style={roomListStyle}>
-                <h2>Rooms</h2>
-                <RoomItems />
+                <h2>Room Details</h2>
+                <RoomDetails />
             </div>
         </div>
     );

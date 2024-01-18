@@ -1,12 +1,12 @@
 import React from 'react';
-import RoomItems from '../../components/rooms/roomItems';
+import StudentDetails from '@/components/students/studentDetails';
 
-export default function Rooms() {
+export default function Student() {
     const containerStyle = {
         display: 'flex',
     };
 
-    const roomListStyle = {
+    const studentListStyle = {
         width: '30%',
         border: '1px solid #000',
         borderRadius: '10px',
@@ -16,9 +16,9 @@ export default function Rooms() {
 
     return (
         <div style={containerStyle}>
-            <div style={roomListStyle}>
-                <h2>Rooms</h2>
-                <RoomItems />
+            <div style={studentListStyle}>
+                <h2>Student Details</h2>
+                <StudentDetails />
             </div>
         </div>
     );

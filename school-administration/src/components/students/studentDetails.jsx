@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 
-export default function StudentDetails() {
+export default function StudentDetails(props) {
     const [data, setData] = useState();
     const router = useRouter();
     const { studentId } = router.query;
@@ -21,6 +21,8 @@ export default function StudentDetails() {
 
                 const responseData = await response.json();
                 setData(responseData);
+                console.log('responseData', responseData);
+                props.setSiblingGroupId(responseData.siblingGroupId);
 
             } catch (error) {
                 console.error('Error fetching data:', error);

@@ -2,16 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
-interface Student {
-    id: number;
-    firstName: string;
-    lastName: number;
-    age: number;
-    roomName: string;
-}
-
 export default function StudentInRoom() {
-    const [data, setData] = useState<Student[]>();
+    const [data, setData] = useState();
     const router = useRouter();
     const { roomId } = router.query;
 
@@ -44,8 +36,10 @@ export default function StudentInRoom() {
 
     return (  
         <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '1rem' }}>
-            {data.map((student, index) => (
-                <Link href={`/students/${student.id}`}><div key={index}>{student.firstName} {student.lastName}</div></Link>
+            {data.map((student) => (
+                <Link href={`/students/${student.id}`} key={student.id}>
+                    <div>{student.firstName} {student.lastName}</div>
+                </Link>
             ))}
         </div>
     );

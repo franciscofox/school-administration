@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import DeleteStudentButton from './deleteStudentButton';
 
-interface Student {
-    id: number;
-    firstName: string;
-    lastName: number;
-    age: number;
-}
+function StudentItems({studentRrefreshKey, setStudentRefreshKey}) {
+    const [data, setData] = useState([]);
 
-function StudentItems() {
-    const [data, setData] = useState<Student[]>([]);
+    const handleStudentDelete = () => {
+        setStudentRefreshKey(oldKey => oldKey + 1);
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -30,16 +28,21 @@ function StudentItems() {
         }
 
         fetchData();
-    }), [];
+    }, [studentRrefreshKey]);
 
 
     return (  
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr 1fr', gap: '10px' }}>
+            <div style={{ fontWeight: 'bold' }}>Student Name</div>
+            <div style={{ fontWeight: 'bold' }}>Room Name</div>
+            <div style={{ fontWeight: 'bold' }}></div>
+
             {data.map((item) => (
-                <div key={item.id} style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <React.Fragment key={item.id}>
                     <div><Link href={`/students/${item.id}`}>{item.firstName} {item.lastName}</Link></div>
-                    <div>{item.age}</div>
-                </div>
+                    <div>{item.roomName}</div>
+                    <DeleteStudentButton studentId={item.id} firstName={item.firstName} lastName={item.lastName} onStudentDelete={handleStudentDelete} />
+                </React.Fragment>
             ))}
         </div>
     );

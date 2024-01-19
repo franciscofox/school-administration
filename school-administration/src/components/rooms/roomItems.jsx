@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import DeleteRoomButton from './deleteRoomButton';
 
-interface Room {
-    id: number;
-    name: string;
-    capacity: number;
-}
+export default function RoomItems({roomRefreshKey, setRoomRefreshKey}) {
+    const [data, setData] = useState([]);
 
-export default function RoomItems() {
-    const [data, setData] = useState<Room[]>([]);
+    const handleRoomDelete = () => {
+        setRoomRefreshKey(oldKey => oldKey + 1);
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -29,15 +28,18 @@ export default function RoomItems() {
         }
 
         fetchData();
-    }), [];
-
+    }, [roomRefreshKey]);
 
     return (  
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '10px' }}>
+            <div style={{ fontWeight: 'bold' }}>Room Name</div>
+            <div style={{ fontWeight: 'bold' }}></div>
+
             {data.map((item) => (
-                <div key={item.id} style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <React.Fragment key={item.id}>
                     <div><Link href={`/rooms/${item.id}`}>{item.name}</Link></div>
-                </div>
+                    <DeleteRoomButton roomId={item.id} roomName={item.name} onRoomDelete={handleRoomDelete} />
+                </React.Fragment>
             ))}
         </div>
     );

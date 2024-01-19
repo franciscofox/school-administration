@@ -17,6 +17,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/components/students/studentDetails.jsx", "src/components/rooms/roomDetails.jsx", "src/components/modal/modal.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/components/students/studentDetails.jsx", "src/components/rooms/roomDetails.jsx", "src/components/modal/modal.jsx", "src/components/rooms/addRoomButton.jsx", "src/pages/rooms/index.jsx", "src/pages/students/index.jsx", "src/components/rooms/roomItems.jsx", "src/components/students/studentItems.jsx"],
   "exclude": ["node_modules"]
 }

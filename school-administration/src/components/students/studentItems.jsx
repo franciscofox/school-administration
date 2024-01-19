@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import DeleteStudentButton from './deleteStudentButton';
 
-function StudentItems({studentRrefreshKey, setStudentRefreshKey}) {
+function StudentItems({studentRrefreshKey, setStudentRefreshKey, searchResults}) {
     const [data, setData] = useState([]);
 
     const handleStudentDelete = () => {
@@ -12,6 +12,11 @@ function StudentItems({studentRrefreshKey, setStudentRefreshKey}) {
     useEffect(() => {
         const fetchData = async () => {
             try {
+                if (searchResults !== undefined && searchResults.length > 0) {
+                    setData(searchResults);
+                    return;
+                }
+
                 const apiUrl = 'http://localhost:4000/students/';
                 const response = await fetch(apiUrl);
                 
@@ -28,7 +33,7 @@ function StudentItems({studentRrefreshKey, setStudentRefreshKey}) {
         }
 
         fetchData();
-    }, [studentRrefreshKey]);
+    }, [studentRrefreshKey, searchResults]);
 
 
     return (  

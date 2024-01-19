@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import DeleteRoomButton from './deleteRoomButton';
 
-export default function RoomItems({roomRefreshKey, setRoomRefreshKey}) {
+export default function RoomItems({roomRefreshKey, setRoomRefreshKey, searchResults}) {
     const [data, setData] = useState([]);
 
     const handleRoomDelete = () => {
@@ -12,6 +12,11 @@ export default function RoomItems({roomRefreshKey, setRoomRefreshKey}) {
     useEffect(() => {
         const fetchData = async () => {
             try {
+                if (searchResults !== undefined && searchResults.length > 0) {
+                    setData(searchResults);
+                    return;
+                }
+
                 const apiUrl = 'http://localhost:4000/rooms/';
                 const response = await fetch(apiUrl);
                 
@@ -28,7 +33,7 @@ export default function RoomItems({roomRefreshKey, setRoomRefreshKey}) {
         }
 
         fetchData();
-    }, [roomRefreshKey]);
+    }, [roomRefreshKey, searchResults]);
 
     return (  
         <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '10px' }}>

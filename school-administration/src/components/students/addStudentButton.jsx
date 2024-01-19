@@ -7,8 +7,10 @@ const AddStudentButton = ({onStudentAdd}) => {
     const [lastName, setLastName] = useState('');
     const [age, setAge] = useState('');
     const [roomName, setRoomName] = useState('');
+    const [siblingId, setSiblingId] = useState('');
     const [message, setMessage] = useState('');
 
+    const [siblingOptions, setSiblingOptions] = useState([]);
     const [roomOptions, setRoomOptions] = useState([]);
 
     useEffect(() => {
@@ -23,12 +25,27 @@ const AddStudentButton = ({onStudentAdd}) => {
             }
         };
 
+        const fetchSiblingOptions = async () => {
+            try {
+                const response = await fetch('http://localhost:4000/students');
+                const data = await response.json();
+                const siblingOptions = data.map(student => ({
+                    name: student.firstName + ' ' + student.lastName,
+                    id: student.id
+                }));
+                setSiblingOptions(siblingOptions);
+            } catch (error) {
+                console.error('Failed to fetch sibling options:', error);
+            }
+        }
+
         fetchRoomOptions();
+        fetchSiblingOptions();
     }, []);
 
     const handleAddStudent = async () => {
         try {
-            const response = await addStudent(firstName, lastName, age, roomName);
+            const response = await addStudent(firstName, lastName, age, roomName, siblingId);
             if (response) {
                 setMessage('Student created successfully!');
                 setIsModalOpen(false);
@@ -55,6 +72,10 @@ const AddStudentButton = ({onStudentAdd}) => {
                     roomName={roomName}
                     setRoomName={setRoomName}
                     roomOptions={roomOptions}
+                    siblingId={siblingId}
+                    setSiblingId={setSiblingId}
+                    siblingOptions={siblingOptions}
+
                     onSubmit={handleAddStudent}
                     onClose={() => setIsModalOpen(false)}
                     message={message}
@@ -70,6 +91,8 @@ const Modal = ({    firstName, setFirstName,
                     age, setAge, 
                     roomName, setRoomName,
                     roomOptions, 
+                    siblingId, setSiblingId,
+                    siblingOptions,
                     onSubmit, 
                     onClose, 
                     message }) => {
@@ -102,7 +125,16 @@ const Modal = ({    firstName, setFirstName,
                     value={age}
                     onChange={(e) => setAge(parseInt(e.target.value, 10))}
                 />
-                <select style={inputStyle} value={roomName} onChange={(e) => setRoomName(e.target.value)}>
+                <select style={inputStyle} value={siblingId} onChange={(e) => setSiblingId(e.target.value || null)}>
+                    <option value="">Select a sibling (if applies)</option>
+                    {siblingOptions && siblingOptions.map((sibling) => (
+                        <option key={sibling.id} value={sibling.id}>
+                            {sibling.name}
+                        </option>
+                    ))}
+                </select>
+                <select style={inputStyle} value={roomName} onChange={(e) => setRoomName(e.target.value || null)}>
+                    <option value="">Select a room</option>
                     {roomOptions && roomOptions.map((room) => (
                         <option key={room} value={room}>
                             {room}
@@ -117,7 +149,9 @@ const Modal = ({    firstName, setFirstName,
     );
 };
 
-async function addStudent(firstName, lastName, age, roomName) {
+async function addStudent(firstName, lastName, age, roomName, siblingId) {
+    console.log(firstName, lastName, age, roomName, siblingId);
+
     const response = await fetch(`http://localhost:4000/students/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -126,6 +160,7 @@ async function addStudent(firstName, lastName, age, roomName) {
             lastName: lastName,
             age: parseInt(age),
             roomName: roomName,
+            siblingId: parseInt(siblingId),
         }),
     });
 

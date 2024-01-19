@@ -2,25 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
-interface Student {
-    id: number;
-    firstName: string;
-    lastName: number;
-    age: number;
-    roomName: string;
-}
-
-export default function StudentInRoom() {
-    const [data, setData] = useState<Student[]>();
-    const router = useRouter();
-    const { roomId } = router.query;
+export default function Siblings({siblingGroupId}) {
+    const [data, setData] = useState();
 
     useEffect(() => {
-        if (!roomId) return;
+        if (!siblingGroupId) return;
 
         const fetchData = async () => {
             try {
-                const apiUrl = `http://localhost:4000/rooms/${roomId}/students`;
+                const apiUrl = `http://localhost:4000/students/${siblingGroupId}/siblings`;
                 const response = await fetch(apiUrl);
 
                 if (!response.ok) {
@@ -36,10 +26,10 @@ export default function StudentInRoom() {
         }
 
         fetchData();
-    }, [roomId]); 
+    }, [siblingGroupId]); 
     
     if (!data) {
-        return <div>Loading Students...</div>;
+        return <div>Loading Siblings...</div>;
     }
 
     return (  
@@ -50,3 +40,4 @@ export default function StudentInRoom() {
         </div>
     );
 }
+

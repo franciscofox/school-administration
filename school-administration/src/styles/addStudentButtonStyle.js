@@ -25,8 +25,9 @@ export const inputStyle = {
     padding: '10px',
     borderRadius: '5px',
     border: '1px solid #ccc',
-    width: '70%',
+    width: '90%',
     textAlign: 'left',
+    fontSize: '11px',
 };
 
 export const buttonStyle = {

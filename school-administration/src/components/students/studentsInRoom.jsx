@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
-
-export default function StudentDetails(props) {
+export default function StudentInRoom() {
     const [data, setData] = useState();
     const router = useRouter();
-    const { studentId } = router.query;
+    const { roomId } = router.query;
 
     useEffect(() => {
-        if (!studentId) return;
+        if (!roomId) return;
 
         const fetchData = async () => {
             try {
-                const apiUrl = `http://localhost:4000/students/${studentId}`;
+                const apiUrl = `http://localhost:4000/rooms/${roomId}/students`;
                 const response = await fetch(apiUrl);
 
                 if (!response.ok) {
@@ -21,8 +21,6 @@ export default function StudentDetails(props) {
 
                 const responseData = await response.json();
                 setData(responseData);
-                console.log('responseData', responseData);
-                props.setSiblingGroupId(responseData.siblingGroupId);
 
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -30,19 +28,19 @@ export default function StudentDetails(props) {
         }
 
         fetchData();
-    }, [studentId]); 
+    }, [roomId]); 
     
     if (!data) {
-        return <div>No data</div>;
+        return <div>Loading Students...</div>;
     }
- 
-    return (
+
+    return (  
         <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '1rem' }}>
-            <div>ID: {data.id}</div>
-            <div>First Name: {data.firstName}</div>
-            <div>Last Name: {data.lastName}</div>
-            <div>Age: {data.age}</div>
-            <div>Room: {data.roomName}</div>
+            {data.map((student) => (
+                <Link href={`/students/${student.id}`} key={student.id}>
+                    <div>{student.firstName} {student.lastName}</div>
+                </Link>
+            ))}
         </div>
     );
 }

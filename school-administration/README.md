@@ -5,7 +5,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Installation
 To install and run the School Administration web app:
-* Ensure you have access to the school-admin API. This API is a prerequisite and can be installed from its respective GitHub repository.
+* Ensure you have access to the School Admin API. This API is a prerequisite and can be installed from its respective [GitHub repository](https://github.com/franciscofox/school-administration-server).
 * Install necessary dependencies for this project.
 
 ## Getting Started

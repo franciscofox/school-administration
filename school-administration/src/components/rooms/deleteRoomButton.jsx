@@ -3,11 +3,15 @@ import React from 'react';
 const DeleteRoomButton = ({ roomId, name, onRoomDelete }) => {
     const handleDelete = async () => {
         const isConfirmed = window.confirm(`Are you sure you want to delete room ${name}?`);
+        const token = localStorage.getItem('token');
         if (isConfirmed) {
             console.log(`Deleting room with ID: ${roomId}`);
             const response = await fetch(`http://localhost:4000/rooms/${roomId}`, {
                 method: 'DELETE',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`, 
+                },
             });
             if (response.ok) {
                 console.log(`Room with ID: ${roomId} deleted successfully.`);

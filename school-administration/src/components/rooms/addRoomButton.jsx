@@ -73,9 +73,14 @@ const Modal = ({ roomName, setRoomName, roomCapacity, setRoomCapacity, onSubmit,
 export default AddRoomButton;
 
 async function addRoom(roomName, roomCapacity) {
+    const token = localStorage.getItem('token');
+
     const response = await fetch(`http://localhost:4000/rooms/`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`, 
+        },
         body: JSON.stringify({
             name: roomName,
             capacity: parseInt(roomCapacity),

@@ -94,8 +94,7 @@ const Modal = ({    firstName, setFirstName,
                     siblingId, setSiblingId,
                     siblingOptions,
                     onSubmit, 
-                    onClose, 
-                    message }) => {
+                    onClose, }) => {
     const handleSubmit = () => {
         onSubmit();
         onClose();
@@ -150,11 +149,14 @@ const Modal = ({    firstName, setFirstName,
 };
 
 async function addStudent(firstName, lastName, age, roomName, siblingId) {
-    console.log(firstName, lastName, age, roomName, siblingId);
+    const token = localStorage.getItem('token');
 
     const response = await fetch(`http://localhost:4000/students/`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`, 
+        },
         body: JSON.stringify({
             firstName: firstName,
             lastName: lastName,

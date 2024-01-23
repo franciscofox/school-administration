@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import DeleteRoomButton from './deleteRoomButton';
+import { checkAuth } from '../authConfig/checkAuth';
 
 export default function RoomItems({roomRefreshKey, setRoomRefreshKey, searchResults}) {
     const [data, setData] = useState([]);
@@ -40,10 +41,14 @@ export default function RoomItems({roomRefreshKey, setRoomRefreshKey, searchResu
             <div className="room-items-header">Room Name</div>
             <div className="room-items-header"></div>
 
-            {data.map((item) => (
+            {data.map((item, index) => (
                 <React.Fragment key={item.id}>
                     <div><Link href={`/rooms/${item.id}`}>{item.name}</Link></div>
-                    <DeleteRoomButton roomId={item.id} roomName={item.name} onRoomDelete={handleRoomDelete} />
+                    {checkAuth() ? (
+                        <DeleteRoomButton roomId={item.id} roomName={item.name} onRoomDelete={handleRoomDelete} />
+                    ) : (
+                        index < data.length - 1 && <br />
+                    )}
                 </React.Fragment>
             ))}
         </div>

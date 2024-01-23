@@ -40,7 +40,7 @@ const AddRoomButton = ({onRoomAdd}) => {
     );
 };
 
-const Modal = ({ roomName, setRoomName, roomCapacity, setRoomCapacity, onSubmit, onClose, message }) => {
+const Modal = ({ roomName, setRoomName, roomCapacity, setRoomCapacity, onSubmit, onClose }) => {
     const handleSubmit = () => {
         onSubmit();
         onClose();

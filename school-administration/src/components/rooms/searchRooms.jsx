@@ -8,7 +8,7 @@ const SearchRooms = ({ onSearch }) => {
         e.preventDefault()
 
         try {
-            const response = await fetch(`/rooms/search?query=${query}`)
+            const response = await fetch(`https://ec2-18-188-55-5.us-east-2.compute.amazonaws.com:4000/rooms/search?query=${query}`)
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }

@@ -18,7 +18,7 @@ function StudentItems({studentRrefreshKey, setStudentRefreshKey, searchResults})
                     return;
                 }
 
-                const apiUrl = '/students/';
+                const apiUrl = 'https://ec2-18-188-55-5.us-east-2.compute.amazonaws.com:4000/students/';
                 const response = await fetch(apiUrl);
                 
                 if (!response.ok) {

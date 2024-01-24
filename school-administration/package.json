@@ -1,7 +1,6 @@
 {
   "name": "school-administration",
   "version": "0.1.0",
-  "proxy": "http://ec2-18-188-55-5.us-east-2.compute.amazonaws.com:4000",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -10,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "dotenv": "^16.4.0",
     "http-proxy-middleware": "^2.0.6",
     "next": "14.0.4",
     "react": "^18",

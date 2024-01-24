@@ -1,6 +1,6 @@
 export default async function SignUp(username: string, password: string) {
 
-    const res = await fetch('/users/signup', {
+    const res = await fetch(`${process.env.PROXY_API_URL}/users/signup`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

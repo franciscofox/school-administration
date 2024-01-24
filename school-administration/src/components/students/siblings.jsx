@@ -9,7 +9,7 @@ export default function Siblings({siblingGroupId}) {
 
         const fetchData = async () => {
             try {
-                const apiUrl = `http://localhost:4000/students/${siblingGroupId}/siblings`;
+                const apiUrl = `/students/${siblingGroupId}/siblings`;
                 const response = await fetch(apiUrl);
 
                 if (!response.ok) {

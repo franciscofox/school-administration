@@ -6,7 +6,7 @@ const DeleteRoomButton = ({ roomId, name, onRoomDelete }) => {
         const token = localStorage.getItem('token');
         if (isConfirmed) {
             console.log(`Deleting room with ID: ${roomId}`);
-            const response = await fetch(`http://localhost:4000/rooms/${roomId}`, {
+            const response = await fetch(`/rooms/${roomId}`, {
                 method: 'DELETE',
                 headers: { 
                     'Content-Type': 'application/json',

@@ -75,7 +75,7 @@ export default AddRoomButton;
 async function addRoom(roomName, roomCapacity) {
     const token = localStorage.getItem('token');
 
-    const response = await fetch(`http://localhost:4000/rooms/`, {
+    const response = await fetch(`/rooms/`, {
         method: 'POST',
         headers: { 
             'Content-Type': 'application/json',

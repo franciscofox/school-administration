@@ -37,7 +37,6 @@ export default function RoomDetails() {
         <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '1rem' }}>
         <div>Name: {data.name}</div>
         <div>Capacity: {data.studentCount} / {data.capacity}</div>
-        <div>Is Available: {data.isAvailable ? 'Yes' : 'No'}</div>
     </div>
     );
 }

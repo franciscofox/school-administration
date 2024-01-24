@@ -1,3 +1,14 @@
 body {
   background-color: rgb(204, 216, 220);
 }
+
+.room-items-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 10px;
+}
+
+.room-items-header {
+  font-weight: bold;
+  margin-top: 20px;
+}

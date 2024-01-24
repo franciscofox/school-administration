@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import DeleteRoomButton from './deleteRoomButton';
+import { checkAuth } from '../authConfig/checkAuth';
 
 export default function RoomItems({roomRefreshKey, setRoomRefreshKey, searchResults}) {
     const [data, setData] = useState([]);
@@ -9,41 +10,45 @@ export default function RoomItems({roomRefreshKey, setRoomRefreshKey, searchResu
         setRoomRefreshKey(oldKey => oldKey + 1);
     };
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                if (searchResults !== undefined && searchResults.length > 0) {
-                    setData(searchResults);
-                    return;
-                }
-
-                const apiUrl = 'http://localhost:4000/rooms/';
-                const response = await fetch(apiUrl);
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-
-                const responseData = await response.json();
-                setData(responseData);
-
-            } catch (error) {
-                console.error('Error fetching data:', error);
+    const fetchData = useCallback(async () => {
+        try {
+            if (searchResults !== undefined && searchResults.length > 0) {
+                setData(searchResults);
+                return;
             }
-        }
 
+            const apiUrl = 'http://localhost:4000/rooms/';
+            const response = await fetch(apiUrl);
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const responseData = await response.json();
+            setData(responseData);
+
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }, [searchResults]);
+
+    useEffect(() => {
         fetchData();
-    }, [roomRefreshKey, searchResults]);
+    }, [roomRefreshKey, searchResults, fetchData]);
 
     return (  
-        <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '10px' }}>
-            <div style={{ fontWeight: 'bold' }}>Room Name</div>
-            <div style={{ fontWeight: 'bold' }}></div>
+        <div className="room-items-container">
+            <div className="room-items-header">Room Name</div>
+            <div className="room-items-header"></div>
 
-            {data.map((item) => (
+            {data.map((item, index) => (
                 <React.Fragment key={item.id}>
                     <div><Link href={`/rooms/${item.id}`}>{item.name}</Link></div>
-                    <DeleteRoomButton roomId={item.id} roomName={item.name} onRoomDelete={handleRoomDelete} />
+                    {checkAuth() ? (
+                        <DeleteRoomButton roomId={item.id} roomName={item.name} onRoomDelete={handleRoomDelete} />
+                    ) : (
+                        index < data.length - 1 && <br />
+                    )}
                 </React.Fragment>
             ))}
         </div>

@@ -4,6 +4,7 @@ import AddRoomButton from '../../components/rooms/addRoomButton';
 import SearchRooms from '../../components/rooms/searchRooms';
 import { useState } from 'react';
 import { containerStyle, listStyle } from '../../styles/containerListTitle';
+import { checkAuth } from '@/components/authConfig/checkAuth';
 
 export default function Rooms() {
     const [roomRefreshKey, setRoomRefreshKey] = useState(0);
@@ -23,8 +24,11 @@ export default function Rooms() {
                 <h2>Rooms</h2>
                 <SearchRooms onSearch={handleSearch} />
                 <RoomItems roomRefreshKey={roomRefreshKey} setRoomRefreshKey={setRoomRefreshKey} searchResults={searchResults} />
-                <div style={{ display: 'flex', justifyContent: 'left', marginTop: '20px' }}></div>
-                    <AddRoomButton onRoomAdd={handleRoomAdded} />
+                {checkAuth() && (
+                    <div style={{ display: 'flex', justifyContent: 'left', marginTop: '20px' }}>
+                        <AddRoomButton onRoomAdd={handleRoomAdded} />
+                    </div>
+                )}
             </div>
         </div>
     );

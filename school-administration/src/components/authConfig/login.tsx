@@ -1,6 +1,6 @@
 export default async function LogIn(username: string, password: string) {
     try {
-        const res = await fetch('http://localhost:4000/users/login', {
+        const res = await fetch('/users/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

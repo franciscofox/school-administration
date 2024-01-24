@@ -1,6 +1,6 @@
 export default async function SignUp(username: string, password: string) {
 
-    const res = await fetch('http://localhost:4000/users/signup', {
+    const res = await fetch('/users/signup', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

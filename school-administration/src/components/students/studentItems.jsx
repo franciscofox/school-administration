@@ -18,7 +18,7 @@ function StudentItems({studentRrefreshKey, setStudentRefreshKey, searchResults})
                     return;
                 }
 
-                const apiUrl = 'http://localhost:4000/students/';
+                const apiUrl = '/students/';
                 const response = await fetch(apiUrl);
                 
                 if (!response.ok) {

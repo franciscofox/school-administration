@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
 import Link from 'next/link';
 
 export default function Siblings({siblingGroupId}) {
@@ -35,7 +34,7 @@ export default function Siblings({siblingGroupId}) {
     return (  
         <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '1rem' }}>
             {data.map((student, index) => (
-                <Link href={`/students/${student.id}`}><div key={index}>{student.firstName} {student.lastName}</div></Link>
+                <Link href={`/students/${student.id}`} key={index}><div>{student.firstName} {student.lastName}</div></Link>
             ))}
         </div>
     );

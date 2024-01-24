@@ -6,6 +6,7 @@ export default function StudentDetails(props) {
     const [data, setData] = useState();
     const router = useRouter();
     const { studentId } = router.query;
+    const { setSiblingGroupId } = props;
 
     useEffect(() => {
         if (!studentId) return;
@@ -22,7 +23,7 @@ export default function StudentDetails(props) {
                 const responseData = await response.json();
                 setData(responseData);
                 console.log('responseData', responseData);
-                props.setSiblingGroupId(responseData.siblingGroupId);
+                setSiblingGroupId(responseData.siblingGroupId);
 
             } catch (error) {
                 console.error('Error fetching data:', error);

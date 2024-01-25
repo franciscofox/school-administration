@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import DeleteStudentButton from './deleteStudentButton';
 import { checkAuth } from '../authConfig/checkAuth';
+import process from 'process';
 
 function StudentItems({studentRrefreshKey, setStudentRefreshKey, searchResults}) {
     const [data, setData] = useState([]);
@@ -18,7 +19,7 @@ function StudentItems({studentRrefreshKey, setStudentRefreshKey, searchResults})
                     return;
                 }
 
-                const apiUrl = 'https://ec2-18-188-55-5.us-east-2.compute.amazonaws.com:4000/students/';
+                const apiUrl = `${process.env.PROXY_API_URL}/students/`;
                 const response = await fetch(apiUrl);
                 
                 if (!response.ok) {

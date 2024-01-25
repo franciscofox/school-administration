@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { modalBackdropStyle, modalStyle, inputStyle, buttonStyle, addButtonStyle } from '../../styles/addStudentButtonStyle';
+import process from 'process';
 
 const AddRoomButton = ({onRoomAdd}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -75,7 +76,7 @@ export default AddRoomButton;
 async function addRoom(roomName, roomCapacity) {
     const token = localStorage.getItem('token');
 
-    const response = await fetch(`https://ec2-18-188-55-5.us-east-2.compute.amazonaws.com:4000/rooms/`, {
+    const response = await fetch(`${process.env.PROXY_API_URL}/rooms/`, {
         method: 'POST',
         headers: { 
             'Content-Type': 'application/json',

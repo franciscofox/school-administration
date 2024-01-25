@@ -1,12 +1,14 @@
 import React from 'react';
+import process from 'process';
 
 const DeleteRoomButton = ({ roomId, name, onRoomDelete }) => {
     const handleDelete = async () => {
         const isConfirmed = window.confirm(`Are you sure you want to delete room ${name}?`);
         const token = localStorage.getItem('token');
         if (isConfirmed) {
+
             console.log(`Deleting room with ID: ${roomId}`);
-            const response = await fetch(`https://ec2-18-188-55-5.us-east-2.compute.amazonaws.com:4000/rooms/${roomId}`, {
+            const response = await fetch(`${process.env.PROXY_API_URL}/rooms/${roomId}`, {
                 method: 'DELETE',
                 headers: { 
                     'Content-Type': 'application/json',

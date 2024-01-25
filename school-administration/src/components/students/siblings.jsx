@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import process from 'process';
 
 export default function Siblings({siblingGroupId}) {
     const [data, setData] = useState();
@@ -9,7 +10,7 @@ export default function Siblings({siblingGroupId}) {
 
         const fetchData = async () => {
             try {
-                const apiUrl = `https://ec2-18-188-55-5.us-east-2.compute.amazonaws.com:4000/students/${siblingGroupId}/siblings`;
+                const apiUrl = `${process.env.PROXY_API_URL}/students/${siblingGroupId}/siblings`;
                 const response = await fetch(apiUrl);
 
                 if (!response.ok) {

@@ -1,6 +1,6 @@
 export default async function LogIn(username: string, password: string) {
     try {
-        const res = await fetch('http://ip-172-31-23-176.us-east-2.compute.internal:4000/users/login', {
+        const res = await fetch('http://ec2-18-188-55-5.us-east-2.compute.amazonaws.com:4000/users/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

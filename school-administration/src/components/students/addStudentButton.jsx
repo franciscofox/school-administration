@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { modalBackdropStyle, modalStyle, inputStyle, buttonStyle, addButtonStyle } from '../../styles/addStudentButtonStyle';
-import process from 'process';
 
 const AddStudentButton = ({onStudentAdd}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -17,7 +16,7 @@ const AddStudentButton = ({onStudentAdd}) => {
     useEffect(() => {
         const fetchRoomOptions = async () => {
             try {
-                const response = await fetch(`${process.env.PROXY_API_URL}/rooms`);
+                const response = await fetch(`http://ec2-18-188-55-5.us-east-2.compute.amazonaws.com:4000/rooms`);
                 const data = await response.json();
                 const roomNames = data.map(room => room.name);
                 setRoomOptions(roomNames);
@@ -28,7 +27,7 @@ const AddStudentButton = ({onStudentAdd}) => {
 
         const fetchSiblingOptions = async () => {
             try {
-                const response = await fetch(`${process.env.PROXY_API_URL}/students`);
+                const response = await fetch(`http://ec2-18-188-55-5.us-east-2.compute.amazonaws.com:4000/students`);
                 const data = await response.json();
                 const siblingOptions = data.map(student => ({
                     name: student.firstName + ' ' + student.lastName,
@@ -152,7 +151,7 @@ const Modal = ({    firstName, setFirstName,
 async function addStudent(firstName, lastName, age, roomName, siblingId) {
     const token = localStorage.getItem('token');
 
-    const response = await fetch(`${process.env.PROXY_API_URL}/students/`, {
+    const response = await fetch(`http://ec2-18-188-55-5.us-east-2.compute.amazonaws.com:4000/students/`, {
         method: 'POST',
         headers: { 
             'Content-Type': 'application/json',

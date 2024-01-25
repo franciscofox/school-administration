@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import DeleteRoomButton from './deleteRoomButton';
 import { checkAuth } from '../authConfig/checkAuth';
-import process from 'process';
 
 export default function RoomItems({roomRefreshKey, setRoomRefreshKey, searchResults}) {
     const [data, setData] = useState([]);
@@ -18,7 +17,7 @@ export default function RoomItems({roomRefreshKey, setRoomRefreshKey, searchResu
                 return;
             }
 
-            const apiUrl = `${process.env.PROXY_API_URL}/rooms/`;
+            const apiUrl = `http://ec2-18-188-55-5.us-east-2.compute.amazonaws.com:4000/rooms/`;
             const response = await fetch(apiUrl);
             
             if (!response.ok) {

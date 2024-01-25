@@ -1,5 +1,4 @@
 import React from 'react';
-import process from 'process';
 
 const DeleteStudentButton = ({ studentId, firstName, lastName, onStudentDelete }) => {
     const handleDelete = async () => {
@@ -7,7 +6,7 @@ const DeleteStudentButton = ({ studentId, firstName, lastName, onStudentDelete }
         const token = localStorage.getItem('token');
         if (isConfirmed) {
             console.log(`Deleting student with ID: ${studentId}`);
-            const response = await fetch(`${process.env.PROXY_API_URL}/students/${studentId}`, {
+            const response = await fetch(`http://ec2-18-188-55-5.us-east-2.compute.amazonaws.com:4000/students/${studentId}`, {
                 method: 'DELETE',
                 headers: { 
                     'Content-Type': 'application/json',

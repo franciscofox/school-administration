@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import process from 'process';
 
 export default function StudentInRoom() {
     const [data, setData] = useState();
@@ -13,7 +12,7 @@ export default function StudentInRoom() {
 
         const fetchData = async () => {
             try {
-                const apiUrl = `${process.env.PROXY_API_URL}/rooms/${roomId}/students`;
+                const apiUrl = `http://ec2-18-188-55-5.us-east-2.compute.amazonaws.com:4000/rooms/${roomId}/students`;
                 const response = await fetch(apiUrl);
 
                 if (!response.ok) {

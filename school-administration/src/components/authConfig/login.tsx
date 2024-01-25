@@ -1,6 +1,6 @@
 export default async function LogIn(username: string, password: string) {
     try {
-        const res = await fetch(`${process.env.PROXY_API_URL}/users/login`, {
+        const res = await fetch(`http://ec2-18-188-55-5.us-east-2.compute.amazonaws.com:4000/users/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

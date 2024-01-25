@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import process from 'process';
 
 const SearchStudents = ({ onSearch }) => {
     const [query, setQuery] = useState('');
@@ -9,7 +8,7 @@ const SearchStudents = ({ onSearch }) => {
         e.preventDefault()
 
         try {
-            const response = await fetch(`${process.env.PROXY_API_URL}/students/search?query=${query}`)
+            const response = await fetch(`http://ec2-18-188-55-5.us-east-2.compute.amazonaws.com:4000/students/search?query=${query}`)
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }

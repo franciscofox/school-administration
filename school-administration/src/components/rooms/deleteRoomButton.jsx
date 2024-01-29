@@ -7,7 +7,7 @@ const DeleteRoomButton = ({ roomId, name, onRoomDelete }) => {
         if (isConfirmed) {
 
             console.log(`Deleting room with ID: ${roomId}`);
-            const response = await fetch(`http://ec2-18-188-55-5.us-east-2.compute.amazonaws.com:4000/rooms/${roomId}`, {
+            const response = await fetch(`http://ec2-18-224-135-214.us-east-2.compute.amazonaws.com:4000/rooms/${roomId}`, {
                 method: 'DELETE',
                 headers: { 
                     'Content-Type': 'application/json',

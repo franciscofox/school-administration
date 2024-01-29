@@ -12,7 +12,7 @@ export default function StudentInRoom() {
 
         const fetchData = async () => {
             try {
-                const apiUrl = `http://ec2-18-188-55-5.us-east-2.compute.amazonaws.com:4000/rooms/${roomId}/students`;
+                const apiUrl = `http://ec2-18-224-135-214.us-east-2.compute.amazonaws.com:4000/rooms/${roomId}/students`;
                 const response = await fetch(apiUrl);
 
                 if (!response.ok) {

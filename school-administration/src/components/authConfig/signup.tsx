@@ -1,6 +1,6 @@
 export default async function SignUp(username: string, password: string) {
 
-    const res = await fetch(`http://ec2-18-188-55-5.us-east-2.compute.amazonaws.com:4000/users/signup`, {
+    const res = await fetch(`http://localhost:4000/users/signup`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

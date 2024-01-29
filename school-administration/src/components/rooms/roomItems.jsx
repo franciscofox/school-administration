@@ -17,7 +17,7 @@ export default function RoomItems({roomRefreshKey, setRoomRefreshKey, searchResu
                 return;
             }
 
-            const apiUrl = `http://ec2-18-188-55-5.us-east-2.compute.amazonaws.com:4000/rooms/`;
+            const apiUrl = `http://localhost:4000/rooms/`;
             const response = await fetch(apiUrl);
             
             if (!response.ok) {

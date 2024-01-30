@@ -1,5 +1,5 @@
 import React from "react";
-import SignUp from "../../helpers/signup";
+import signUp from "../../helpers/signup";
 import { backdropStyle, containerStyle, inputStyle, buttonStyle } from "../../styles/loginStyle";
 import { useRouter } from "next/router";
 import { Formik, Field, Form } from 'formik';
@@ -18,7 +18,7 @@ export default function LogInPage() {
     };
 
     const handleSignUp = (username, password) => {
-        SignUp(username, password);
+        signUp(username, password);
         router.push("/");
     }
         

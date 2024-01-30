@@ -1,4 +1,4 @@
-export default async function SignUp(username, password) {
+export default async function signUp(username, password) {
 
     const res = await fetch(`http://localhost:4000/users/signup`, {
         method: 'POST',

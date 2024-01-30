@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import DeleteRoomButton from './deleteRoomButton';
-import { checkAuth } from '../authConfig/checkAuth';
+import { useAuth } from '../../context/AuthContext';
 
 export default function RoomItems({roomRefreshKey, setRoomRefreshKey, searchResults}) {
     const [data, setData] = useState([]);
+    const { isSignedIn } = useAuth();
 
     const handleRoomDelete = () => {
         setRoomRefreshKey(oldKey => oldKey + 1);
@@ -44,7 +45,7 @@ export default function RoomItems({roomRefreshKey, setRoomRefreshKey, searchResu
             {data.map((item, index) => (
                 <React.Fragment key={item.id}>
                     <div><Link href={`/rooms/${item.id}`}>{item.name}</Link></div>
-                    {checkAuth() ? (
+                    {isSignedIn ? (
                         <DeleteRoomButton roomId={item.id} roomName={item.name} onRoomDelete={handleRoomDelete} />
                     ) : (
                         index < data.length - 1 && <br />

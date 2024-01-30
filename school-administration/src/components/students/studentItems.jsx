@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import DeleteStudentButton from './deleteStudentButton';
-import { checkAuth } from '../authConfig/checkAuth';
+import { useAuth } from '../../context/AuthContext';
 
 function StudentItems({studentRrefreshKey, setStudentRefreshKey, searchResults}) {
     const [data, setData] = useState([]);
+    const { isSignedIn } = useAuth();
 
     const handleStudentDelete = () => {
         setStudentRefreshKey(oldKey => oldKey + 1);
@@ -47,7 +48,7 @@ function StudentItems({studentRrefreshKey, setStudentRefreshKey, searchResults})
                 <React.Fragment key={item.id}>
                     <div><Link href={`/students/${item.id}`}>{item.firstName} {item.lastName}</Link></div>
                     <div>{item.roomName}</div>
-                    {checkAuth() ? (
+                    {isSignedIn ? (
                         <DeleteStudentButton studentId={item.id} firstName={item.firstName} lastName={item.lastName} onStudentDelete={handleStudentDelete} />
                     ) : (
                         <br />

@@ -1,5 +1,5 @@
 import React from "react";
-import SignUp from "../../components/authConfig/signup";
+import SignUp from "../../helpers/signup";
 import { backdropStyle, containerStyle, inputStyle, buttonStyle } from "../../styles/loginStyle";
 import { useRouter } from "next/router";
 import { useState } from "react";

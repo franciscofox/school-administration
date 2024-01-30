@@ -1,11 +1,13 @@
 import Link from 'next/link';
 import React from 'react';
+import { useAuth } from '@/context/AuthContext';
 
-export default function Layout({children, isLoggedIn}: {children: React.ReactNode, isLoggedIn: boolean}) {
+export default function Layout({children}) {
+  const { isSignedIn } = useAuth();
 
   return (
     <div>
-      <Header isLoggedIn={isLoggedIn} />
+      <Header isSignedIn={isSignedIn} />
       <main style={{ marginTop: '6rem'}}>
         {children}
       </main>
@@ -13,7 +15,7 @@ export default function Layout({children, isLoggedIn}: {children: React.ReactNod
   )
 }
 
-function Header({isLoggedIn}: {isLoggedIn: boolean}) {
+function Header({isSignedIn}) {
   return (
     <header
       style={{
@@ -81,7 +83,7 @@ function Header({isLoggedIn}: {isLoggedIn: boolean}) {
         </Link>
       </div>
       <div>
-        <Link href={isLoggedIn ? "/logout" : "/login"}>
+        <Link href={isSignedIn ? "/logout" : "/login"}>
           <div
             style={{
               backgroundColor: '#3f51b5', 
@@ -90,7 +92,7 @@ function Header({isLoggedIn}: {isLoggedIn: boolean}) {
               marginRight: '1rem',
             }}
           >
-            {isLoggedIn ? 'Log Out' : 'Log In'}
+            {isSignedIn ? 'Log Out' : 'Log In'}
           </div>
         </Link>
       </div>

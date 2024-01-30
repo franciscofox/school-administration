@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
-import { modalBackdropStyle, modalStyle, inputStyle, buttonStyle, addButtonStyle } from '../../styles/addStudentButtonStyle';
+import { Formik, Field, Form } from 'formik';
+import * as Yup from 'yup';
+import { modalBackdropStyle, modalStyle, inputStyle} from '../../styles/addStudentButtonStyle';
+import Button from '../common/Button';
+
+const validationSchema = Yup.object({
+    roomName: Yup.string().required('Required'),
+    roomCapacity: Yup.number().required('Required'),
+  });
 
 const AddRoomButton = ({onRoomAdd}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [roomName, setRoomName] = useState('');
-    const [roomCapacity, setRoomCapacity] = useState('');
     const [message, setMessage] = useState('');
 
-    const handleAddRoom = async () => {
+    const handleAddRoom = async (roomName, roomCapacity) => {
         try {
             const response = await addRoom(roomName, roomCapacity);
             if (response) {
@@ -24,13 +30,9 @@ const AddRoomButton = ({onRoomAdd}) => {
 
     return (
         <div>
-            <button style={addButtonStyle} onClick={() => setIsModalOpen(true)}>Add Room</button>
+            <Button onClick={() => setIsModalOpen(true)}>Add Room</Button>
             {isModalOpen && (
                 <Modal
-                    roomName={roomName}
-                    setRoomName={setRoomName}
-                    roomCapacity={roomCapacity}
-                    setRoomCapacity={setRoomCapacity}
                     onSubmit={handleAddRoom}
                     onClose={() => setIsModalOpen(false)}
                     message={message}
@@ -40,31 +42,27 @@ const AddRoomButton = ({onRoomAdd}) => {
     );
 };
 
-const Modal = ({ roomName, setRoomName, roomCapacity, setRoomCapacity, onSubmit, onClose }) => {
-    const handleSubmit = () => {
-        onSubmit();
-        onClose();
-    };
-
+const Modal = ({ onSubmit, onClose }) => {
     return (
         <div style={modalBackdropStyle}>
             <div style={modalStyle}>
-                <input
-                    style={inputStyle}
-                    type="text"
-                    placeholder="Enter room name"
-                    value={roomName}
-                    onChange={(e) => setRoomName(e.target.value)}
-                />
-                <input
-                    style={inputStyle}
-                    type="number"
-                    placeholder="Enter room capacity"
-                    value={roomCapacity}
-                    onChange={(e) => setRoomCapacity(e.target.value)}
-                />
-                <button style={buttonStyle} onClick={handleSubmit}>Create</button>
-                <button style={buttonStyle} onClick={onClose}>Cancel</button>
+                <Formik
+                    initialValues={{ roomName: '', roomCapacity: '' }}
+                    validationSchema={validationSchema}
+                    onSubmit={(values) => {
+                        onSubmit(values.roomName, values.roomCapacity);
+                        onClose();
+                    }}
+                >
+                    {({ isSubmitting }) => (
+                        <Form>
+                            <Field style={inputStyle} type="text" name="roomName" placeholder="Enter room name" />
+                            <Field style={inputStyle} type="number" name="roomCapacity" placeholder="Enter room capacity" />
+                            <Button type="submit" disabled={isSubmitting}>Create</Button>
+                            <Button type="button" onClick={onClose}>Cancel</Button>
+                        </Form>
+                    )}
+                </Formik>
             </div>
         </div>
     );

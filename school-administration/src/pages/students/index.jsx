@@ -25,8 +25,7 @@ export default function Students() {
                 <h2 style={titleStyle}>Students</h2>
                 <SearchStudents onSearch={handleSearch} />
                 <div style={{ display: 'flex', justifyContent: 'left', marginTop: '20px' }}>
-                <StudentItems studentRrefreshKey={studentRrefreshKey} setRefreshKey={setStudentRefreshKey} searchResults={searchResults}/>
-                </div>
+                <StudentItems studentRefreshKey={studentRrefreshKey} setStudentRefreshKey={setStudentRefreshKey} searchResults={searchResults}/>                </div>
                 {isSignedIn && (
                 <div style={{ display: 'flex', justifyContent: 'left', marginTop: '20px' }}>
                     <AddStudentButton onStudentAdd={handleStudentAdded} />

@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { modalBackdropStyle, modalStyle, inputStyle, buttonStyle, addButtonStyle } from '../../styles/addStudentButtonStyle';
+import { modalBackdropStyle, modalStyle, inputStyle} from '../../styles/addStudentButtonStyle';
+import { Formik, Field, Form } from 'formik'; 
+import * as Yup from 'yup'; 
+import Button from '../common/Button';
+
+const validationSchema = Yup.object({
+    firstName: Yup.string().required('Required'),
+    lastName: Yup.string().required('Required'),
+    age: Yup.number().required('Required'),
+    roomName: Yup.string().required('Required'),
+    siblingId: Yup.string().nullable(),
+});
 
 const AddStudentButton = ({onStudentAdd}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [age, setAge] = useState('');
-    const [roomName, setRoomName] = useState('');
-    const [siblingId, setSiblingId] = useState('');
     const [message, setMessage] = useState('');
 
     const [siblingOptions, setSiblingOptions] = useState([]);
@@ -43,9 +49,9 @@ const AddStudentButton = ({onStudentAdd}) => {
         fetchSiblingOptions();
     }, []);
 
-    const handleAddStudent = async () => {
+    const handleAddStudent = async (values) => {
         try {
-            const response = await addStudent(firstName, lastName, age, roomName, siblingId);
+            const response = await addStudent(values.firstName, values.lastName, values.age, values.roomName, values.siblingId);
             if (response) {
                 setMessage('Student created successfully!');
                 setIsModalOpen(false);
@@ -60,22 +66,11 @@ const AddStudentButton = ({onStudentAdd}) => {
 
     return (
         <div>
-            <button style={addButtonStyle} onClick={() => setIsModalOpen(true)}>Add Student</button>
+            <Button onClick={() => setIsModalOpen(true)}>Add Student</Button>
             {isModalOpen && (
                 <Modal
-                    firstName={firstName}
-                    setFirstName={setFirstName}
-                    lastName={lastName}
-                    setLastName={setLastName}
-                    age={age}
-                    setAge={setAge}
-                    roomName={roomName}
-                    setRoomName={setRoomName}
                     roomOptions={roomOptions}
-                    siblingId={siblingId}
-                    setSiblingId={setSiblingId}
                     siblingOptions={siblingOptions}
-
                     onSubmit={handleAddStudent}
                     onClose={() => setIsModalOpen(false)}
                     message={message}
@@ -84,65 +79,47 @@ const AddStudentButton = ({onStudentAdd}) => {
         </div>
     );
 };
+
 export default AddStudentButton;
 
-const Modal = ({    firstName, setFirstName, 
-                    lastName, setLastName, 
-                    age, setAge, 
-                    roomName, setRoomName,
-                    roomOptions, 
-                    siblingId, setSiblingId,
-                    siblingOptions,
-                    onSubmit, 
-                    onClose, }) => {
-    const handleSubmit = () => {
-        onSubmit();
-        onClose();
-    };
-
+const Modal = ({ roomOptions, siblingOptions, onSubmit, onClose }) => {
     return (
         <div style={modalBackdropStyle}>
             <div style={modalStyle}>
-                <input
-                    style={inputStyle}
-                    type="text"
-                    placeholder="Enter first name"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                />
-                <input
-                    style={inputStyle}
-                    type="text"
-                    placeholder="Enter last name"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                />
-                <input
-                    style={inputStyle}
-                    type="number"
-                    placeholder="Enter age"
-                    value={age}
-                    onChange={(e) => setAge(parseInt(e.target.value, 10))}
-                />
-                <select style={inputStyle} value={siblingId} onChange={(e) => setSiblingId(e.target.value || null)}>
-                    <option value="">Select a sibling (if applies)</option>
-                    {siblingOptions && siblingOptions.map((sibling) => (
-                        <option key={sibling.id} value={sibling.id}>
-                            {sibling.name}
-                        </option>
-                    ))}
-                </select>
-                <select style={inputStyle} value={roomName} onChange={(e) => setRoomName(e.target.value || null)}>
-                    <option value="">Select a room</option>
-                    {roomOptions && roomOptions.map((room) => (
-                        <option key={room} value={room}>
-                            {room}
-                        </option>
-                    ))}
-                </select>
-    
-                <button style={buttonStyle} onClick={handleSubmit}>Create</button>
-                <button style={buttonStyle} onClick={onClose}>Cancel</button>
+                <Formik
+                    initialValues={{ firstName: '', lastName: '', age: '', roomName: '', siblingId: '' }}
+                    validationSchema={validationSchema}
+                    onSubmit={(values) => {
+                        onSubmit(values);
+                        onClose();
+                    }}
+                >
+                    {({ isSubmitting }) => (
+                        <Form>
+                            <Field style={inputStyle} type="text" name="firstName" placeholder="Enter first name" />
+                            <Field style={inputStyle} type="text" name="lastName" placeholder="Enter last name" />
+                            <Field style={inputStyle} type="number" name="age" placeholder="Enter age" />
+                            <Field as="select" style={inputStyle} name="siblingId">
+                                <option value="">Select a sibling (if applies)</option>
+                                {siblingOptions && siblingOptions.map((sibling) => (
+                                    <option key={sibling.id} value={sibling.id}>
+                                        {sibling.name}
+                                    </option>
+                                ))}
+                            </Field>
+                            <Field as="select" style={inputStyle} name="roomName">
+                                <option value="">Select a room</option>
+                                {roomOptions && roomOptions.map((room) => (
+                                    <option key={room} value={room}>
+                                        {room}
+                                    </option>
+                                ))}
+                            </Field>
+                            <Button type="submit" disabled={isSubmitting}>Create</Button>
+                            <Button  type="button" onClick={onClose}>Cancel</Button>
+                        </Form>
+                    )}
+                </Formik>
             </div>
         </div>
     );

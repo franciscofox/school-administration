@@ -18,7 +18,7 @@ export default function RoomItems({roomRefreshKey, setRoomRefreshKey, searchResu
                 return;
             }
 
-            const apiUrl = `http://localhost:4000/rooms/`;
+            const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/rooms/`;
             const response = await fetch(apiUrl);
             
             if (!response.ok) {

@@ -13,7 +13,7 @@ export default function StudentDetails(props) {
 
         const fetchData = async () => {
             try {
-                const apiUrl = `http://localhost:4000/students/${studentId}`;
+                const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/students/${studentId}`;
                 const response = await fetch(apiUrl);
 
                 if (!response.ok) {

@@ -12,7 +12,7 @@ export default function StudentInRoom() {
 
         const fetchData = async () => {
             try {
-                const apiUrl = `http://localhost:4000/rooms/${roomId}/students`;
+                const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/rooms/${roomId}/students`;
                 const response = await fetch(apiUrl);
 
                 if (!response.ok) {

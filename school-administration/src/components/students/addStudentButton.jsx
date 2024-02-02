@@ -22,7 +22,7 @@ const AddStudentButton = ({onStudentAdd}) => {
     useEffect(() => {
         const fetchRoomOptions = async () => {
             try {
-                const response = await fetch(`http://localhost:4000/rooms`);
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/rooms`);
                 const data = await response.json();
                 const roomNames = data.map(room => room.name);
                 setRoomOptions(roomNames);
@@ -33,7 +33,7 @@ const AddStudentButton = ({onStudentAdd}) => {
 
         const fetchSiblingOptions = async () => {
             try {
-                const response = await fetch(`http://localhost:4000/students`);
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/students`);
                 const data = await response.json();
                 const siblingOptions = data.map(student => ({
                     name: student.firstName + ' ' + student.lastName,
@@ -128,7 +128,7 @@ const Modal = ({ roomOptions, siblingOptions, onSubmit, onClose }) => {
 async function addStudent(firstName, lastName, age, roomName, siblingId) {
     const token = localStorage.getItem('token');
 
-    const response = await fetch(`http://localhost:4000/students/`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/students/`, {
         method: 'POST',
         headers: { 
             'Content-Type': 'application/json',

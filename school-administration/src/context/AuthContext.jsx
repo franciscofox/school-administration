@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
 
 const AuthContext = createContext(null);
 
@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
 
   const logIn = async (username, password) => {
     try {
-      const res = await fetch(`http://localhost:4000/users/login`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -46,8 +46,10 @@ export const AuthProvider = ({ children }) => {
     setIsSignedIn(false);
   };
 
+  const value = useMemo(() => ({ isSignedIn, logIn, logOut }), [isSignedIn, logIn, logOut])
+
   return (
-    <AuthContext.Provider value={{ isSignedIn, logIn, logOut }}>
+    <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
   );

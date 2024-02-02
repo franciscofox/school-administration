@@ -1,6 +1,6 @@
-export default async function SignUp(username: string, password: string) {
+export default async function signUp(username, password) {
 
-    const res = await fetch('/users/signup', {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/signup`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

@@ -8,7 +8,7 @@ const SearchRooms = ({ onSearch }) => {
         e.preventDefault()
 
         try {
-            const response = await fetch(`/rooms/search?query=${query}`)
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/rooms/search?query=${query}`)
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }

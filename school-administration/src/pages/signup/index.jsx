@@ -1,12 +1,16 @@
 import React from "react";
-import SignUp from "../../components/authConfig/signup";
+import signUp from "../../helpers/signup";
 import { backdropStyle, containerStyle, inputStyle, buttonStyle } from "../../styles/loginStyle";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { Formik, Field, Form } from 'formik';
+import * as Yup from 'yup';
+
+const validationSchema = Yup.object({
+    username: Yup.string().required('Required'),
+    password: Yup.string().required('Required'),
+  });
 
 export default function LogInPage() {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
     const router = useRouter();
 
     const handleCancel = () => {
@@ -14,18 +18,28 @@ export default function LogInPage() {
     };
 
     const handleSignUp = (username, password) => {
-        SignUp(username, password);
+        signUp(username, password);
         router.push("/");
     }
         
     return (
         <div style={backdropStyle}>
             <div style={containerStyle}>
-            <input style={inputStyle} type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username"/>
-            <input style={inputStyle} type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password"/>
-            <button style={buttonStyle} onClick={() => handleSignUp(username, password)}>Sign Up</button>
-            <button style={buttonStyle} onClick={handleCancel}>Cancel</button>
+                <Formik
+                    initialValues={{ username: '', password: '' }}
+                    validationSchema={validationSchema}
+                    onSubmit={(values) => handleSignUp(values.username, values.password)}
+                >
+                    {({ isSubmitting }) => (
+                        <Form>
+                            <Field style={inputStyle} type="text" name="username" placeholder="Username" />
+                            <Field style={inputStyle} type="password" name="password" placeholder="Password" />
+                            <button style={buttonStyle} type="submit" disabled={isSubmitting}>Sign Up</button>
+                            <button style={buttonStyle} type="button" onClick={handleCancel}>Cancel</button>
+                        </Form>
+                    )}
+                </Formik>
             </div>
         </div>
-        );
+    );
 }

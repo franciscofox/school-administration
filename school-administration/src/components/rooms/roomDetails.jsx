@@ -10,8 +10,9 @@ export default function RoomDetails() {
         if (!roomId) return;
 
         const fetchData = async () => {
+
             try {
-                const apiUrl = `/rooms/${roomId}`;
+                const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/rooms/${roomId}`;
                 const response = await fetch(apiUrl);
 
                 if (!response.ok) {

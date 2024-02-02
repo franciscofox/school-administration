@@ -8,7 +8,7 @@ const SearchStudents = ({ onSearch }) => {
         e.preventDefault()
 
         try {
-            const response = await fetch(`/students/search?query=${query}`)
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/students/search?query=${query}`)
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }

@@ -1,10 +1,12 @@
 import { useEffect } from 'react';
+import { useAuth } from '../../context/AuthContext';
 
-export default function LogOut() {
+export default function LogOutPage() {
+    const { logOut } = useAuth();
+
     useEffect(() => {
-        localStorage.removeItem('token');
-        window.history.back();
-        window.location.reload();
+        logOut();
+        window.location.href = '/';
     }, []);
 
     return null;

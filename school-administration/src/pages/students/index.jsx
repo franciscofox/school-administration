@@ -4,11 +4,12 @@ import AddStudentButton from '../../components/students/addStudentButton';
 import SearchStudents from '../../components/students/searchStudents';
 import { useState } from 'react';
 import { containerStyle, listStyle, titleStyle } from '../../styles/containerListTitle';
-import { checkAuth } from '@/components/authConfig/checkAuth';
+import { useAuth } from '@/context/AuthContext';
 
 export default function Students() {
     const [studentRrefreshKey, setStudentRefreshKey] = useState(0);
     const [searchResults, setSearchResults] = useState([]);
+    const { isSignedIn } = useAuth();
 
     const handleStudentAdded = () => {
         setStudentRefreshKey(oldKey => oldKey + 1);
@@ -24,9 +25,8 @@ export default function Students() {
                 <h2 style={titleStyle}>Students</h2>
                 <SearchStudents onSearch={handleSearch} />
                 <div style={{ display: 'flex', justifyContent: 'left', marginTop: '20px' }}>
-                <StudentItems studentRrefreshKey={studentRrefreshKey} setRefreshKey={setStudentRefreshKey} searchResults={searchResults}/>
-                </div>
-                {checkAuth() && (
+                <StudentItems studentRefreshKey={studentRrefreshKey} setStudentRefreshKey={setStudentRefreshKey} searchResults={searchResults}/>                </div>
+                {isSignedIn && (
                 <div style={{ display: 'flex', justifyContent: 'left', marginTop: '20px' }}>
                     <AddStudentButton onStudentAdd={handleStudentAdded} />
                 </div>

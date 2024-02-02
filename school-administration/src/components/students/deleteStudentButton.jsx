@@ -6,7 +6,7 @@ const DeleteStudentButton = ({ studentId, firstName, lastName, onStudentDelete }
         const token = localStorage.getItem('token');
         if (isConfirmed) {
             console.log(`Deleting student with ID: ${studentId}`);
-            const response = await fetch(`/students/${studentId}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/students/${studentId}`, {
                 method: 'DELETE',
                 headers: { 
                     'Content-Type': 'application/json',
